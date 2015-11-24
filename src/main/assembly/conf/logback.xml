@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+  <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+    <Append>true</Append>
+    <File>logs/rolling.log</File>
+    <encoder>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %t %p %X{name} [%X{user}] [%X{remoteAddress}] [%c] - %m%n</pattern>
+     <!--   <pattern>[%d{yyyy-MM-dd HH:mm:ss}], %p, %c, %t, %F, %L, %C{1}, %M %m%n</pattern> -->
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <maxIndex>100</maxIndex>
+      <FileNamePattern>logs/rolling.log.%i</FileNamePattern>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <MaxFileSize>10MB</MaxFileSize>
+    </triggeringPolicy>
+  </appender>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %t %p [%c] %m%n</pattern>
+    </encoder>
+  </appender>
+  <!-- TRACE, DEBUG, INFO, WARN, ERROR, ALL 鍜� OFF -->
+  <root level="DEBUG">
+    <appender-ref ref="rolling"/>
+    <appender-ref ref="stdout"/>
+  </root>
+</configuration>
